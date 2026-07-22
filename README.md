@@ -1,24 +1,24 @@
 # A 12-vertex counterexample to claw-free Schur positivity
 
-This repository gives a connected claw-free graph \(G\) whose chromatic
+This repository gives a connected claw-free graph $G$ whose chromatic
 symmetric function is not Schur-positive.  In fact,
 
-\[
-  [s_{(3,3,3,3)}]X_G=-64.
-\]
 
-Thus \(G\) is a counterexample to Stanley's claw-free conjecture (credited to
+$$[s_{(3,3,3,3)}]X_G=-64.$$
+
+
+Thus $G$ is a counterexample to Stanley's claw-free conjecture (credited to
 Gasharov) that every claw-free graph has a Schur-positive chromatic symmetric
 function.
 
 ## The graph
 
-Start with the cycle \(a b c d a\).  Attach a triangle \(a u v a\) at
-\(a\), a triangle \(c x y c\) at \(c\), a leaf \(\ell\) at \(b\), and a
-leaf \(m\) at \(d\).  Let \(H\) be the resulting graph and set
-\(G=L(H)\), its line graph.
+Start with the cycle $a b c d a$.  Attach a triangle $a u v a$ at
+$a$, a triangle $c x y c$ at $c$, a leaf $\ell$ at $b$, and a
+leaf $m$ at $d$.  Let $H$ be the resulting graph and set
+$G=L(H)$, its line graph.
 
-The twelve vertices of \(G\), in the order
+The twelve vertices of $G$, in the order
 
 ```text
 av, bc, xy, dm, au, bl, uv, cy, ad, cx, ab, cd
@@ -38,76 +38,76 @@ and edge set
 
 where `A` and `B` denote vertices 10 and 11.
 
-Every line graph is claw-free: three edges of \(H\) meeting a fixed edge
+Every line graph is claw-free: three edges of $H$ meeting a fixed edge
 cannot be pairwise disjoint, since two of them meet the same endpoint.  The
-graph is connected because \(H\) is connected.
+graph is connected because $H$ is connected.
 
 ## Coefficient calculation
 
-A stable set of \(G=L(H)\) is a matching of \(H\).  The matching number of
-\(H\) is four.  Indeed, \(\{uv,xy,b\ell,dm\}\) is a four-edge matching.  A
-perfect matching would have to contain both leaf edges \(b\ell\) and \(dm\);
+A stable set of $G=L(H)$ is a matching of $H$.  The matching number of
+$H$ is four.  Indeed, $\{uv,xy,b\ell,dm\}$ is a four-edge matching.  A
+perfect matching would have to contain both leaf edges $b\ell$ and $dm$;
 the two remaining attached triangles would then each have three unmatched
 vertices, which is impossible.
 
-It remains to count partitions of \(E(H)\) into four matchings.  At the
-degree-four vertex \(a\), normalize the colors on
-\((ab,ad,au,av)\) to \((1,2,3,4)\).  The colors on
-\((bc,cd,cx,cy)\) form a permutation \(p\) with \(p_1\ne1\) and
-\(p_2\ne2\), leaving fourteen possibilities.  For every such \(p\), each of
-\(b\ell,dm,uv,xy\) has two choices.  Directly sorting the resulting color
+It remains to count partitions of $E(H)$ into four matchings.  At the
+degree-four vertex $a$, normalize the colors on
+$(ab,ad,au,av)$ to $(1,2,3,4)$.  The colors on
+$(bc,cd,cx,cy)$ form a permutation $p$ with $p_1\ne1$ and
+$p_2\ne2$, leaving fourteen possibilities.  For every such $p$, each of
+$b\ell,dm,uv,xy$ has two choices.  Directly sorting the resulting color
 class sizes gives
 
-| permutations at \(c\) | \((4,4,2,2)\) | \((4,3,3,2)\) | \((3,3,3,3)\) |
+| permutations at $c$ | $(4,4,2,2)$ | $(4,3,3,2)$ | $(3,3,3,3)$ |
 |---|---:|---:|---:|
 | `2134`, `2143` | 4 | 8 | 4 |
 | the other 12 admissible permutations | 2 each | 12 each | 2 each |
 | total | 32 | 160 | 32 |
 
-Normalization at \(a\) gives one representative of every unlabeled stable
+Normalization at $a$ gives one representative of every unlabeled stable
 partition.  Hence, using
 
-\[
- [m_\lambda]X_G=N_\lambda\prod_j m_j(\lambda)!,
-\]
+
+$$[m_\lambda]X_G=N_\lambda\prod_j m_j(\lambda)!,$$
+
 
 the relevant monomial coefficients are
 
-\[
- [m_{4422}]X_G=32(2!)(2!)=128,\qquad
+
+$$[m_{4422}]X_G=32(2!)(2!)=128,\qquad
  [m_{4332}]X_G=160(2!)=320,\qquad
- [m_{3333}]X_G=32(4!)=768.
-\]
+ [m_{3333}]X_G=32(4!)=768.$$
+
 
 Since the largest stable set has size four, dominance-unitriangularity of the
 Kostka matrix makes every Schur coefficient indexed by a partition with first
 part greater than four vanish.  Among the remaining partitions that dominate
-\((3,3,3,3)\), the only possibilities are
-\((4,4,4)\), \((4,4,3,1)\), \((4,4,2,2)\), \((4,3,3,2)\), and
-\((3,3,3,3)\).  There are no colorings of the first two types.  The only
+$(3,3,3,3)$, the only possibilities are
+$(4,4,4)$, $(4,4,3,1)$, $(4,4,2,2)$, $(4,3,3,2)$, and
+$(3,3,3,3)$.  There are no colorings of the first two types.  The only
 Kostka numbers needed below are
 
-\[
- K_{4422,4332}=1,\qquad K_{4422,3333}=2,\qquad
- K_{4332,3333}=3.
-\]
 
-Since \(s_\nu=\sum_\lambda K_{\nu\lambda}m_\lambda\), triangular inversion
+$$K_{4422,4332}=1,\qquad K_{4422,3333}=2,\qquad
+ K_{4332,3333}=3.$$
+
+
+Since $s_\nu=\sum_\lambda K_{\nu\lambda}m_\lambda$, triangular inversion
 now gives
 
-\[
- [s_{4422}]X_G=128,
-\]
 
-\[
- [s_{4332}]X_G=320-128=192,
-\]
+$$[s_{4422}]X_G=128,$$
+
+
+
+$$[s_{4332}]X_G=320-128=192,$$
+
 
 and finally
 
-\[
- [s_{3333}]X_G=768-2(128)-3(192)=-64.
-\]
+
+$$[s_{3333}]X_G=768-2(128)-3(192)=-64.$$
+
 
 ## Verification
 
@@ -122,12 +122,12 @@ python3 verify.py
 
 An independent verifier uses Stanley's power-sum inclusion--exclusion formula
 
-\[
- X_G=\sum_{A\subseteq E(G)}(-1)^{|A|}p_{\lambda(V,A)}
-\]
 
-together with the Frobenius character formula.  It enumerates all \(2^{22}\)
-edge subsets and again obtains \(-64\).
+$$X_G=\sum_{A\subseteq E(G)}(-1)^{|A|}p_{\lambda(V,A)}$$
+
+
+together with the Frobenius character formula.  It enumerates all $2^{22}$
+edge subsets and again obtains $-64$.
 
 ```bash
 python3 verify_power_sum.py
