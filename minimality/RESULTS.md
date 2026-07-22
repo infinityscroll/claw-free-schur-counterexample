@@ -5,10 +5,14 @@ chromatic symmetric function (all Schur coefficients computed exactly):
 
 | order | connected graphs | claw-free | non-Schur-positive |
 |---|---|---|---|
-| ≤ 8 | 284,714 | ≤ 881/order | 0 |
+| ≤ 8 | 12,113 | 1,145 | 0 |
 | 9  | 261,080 | 4,494 | 0 |
 | 10 | 11,716,571 | 26,389 | 0 |
 | 11 | 1,006,700,565 | 184,749 | 0 |
+| **total** | **1,018,690,329** | **216,777** | **0** |
+
+The previously quoted number 215,632 is the subtotal for orders 9 through
+11; including orders 1 through 8 gives the correct total 216,777.
 
 Tools: `clawsweep.c` (per-graph: claw filter, stable-partition DP for
 monomial coefficients, exact integer Kostka back-substitution; Kostka data

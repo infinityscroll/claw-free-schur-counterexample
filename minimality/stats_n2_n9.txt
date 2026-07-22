@@ -1,0 +1,8 @@
+done n=2: total=1 clawfree=1 witnesses=0
+done n=3: total=2 clawfree=2 witnesses=0
+done n=4: total=6 clawfree=5 witnesses=0
+done n=5: total=21 clawfree=14 witnesses=0
+done n=6: total=112 clawfree=50 witnesses=0
+done n=7: total=853 clawfree=191 witnesses=0
+done n=8: total=11117 clawfree=881 witnesses=0
+done n=9: total=261080 clawfree=4494 witnesses=0
