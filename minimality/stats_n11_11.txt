@@ -1,0 +1,1 @@
+done n=11: total=81873294 clawfree=17014 witnesses=0
