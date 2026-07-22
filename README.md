@@ -133,6 +133,29 @@ edge subsets and again obtains \(-64\).
 python3 verify_power_sum.py
 ```
 
+## Minimum-order classification
+
+An exhaustive `geng` census gives the following exact result.
+
+- Every claw-free graph on at most 11 vertices is Schur-positive.
+- Among the 1,728,404 connected claw-free graphs on 12 vertices, exactly two
+  isomorphism classes are not Schur-positive.
+
+Their graph6 records and negative coefficients are
+
+```text
+K?`CRAWWUXIM  [s_(3,3,3,3)] = -64
+K?`CR@`bAbRB  [s_(3,3,3,3)] = -40
+```
+
+The second graph is also a line graph. One root graph is obtained from a
+5-cycle by attaching triangles at two distance-two cycle vertices and a
+pendant edge at the intervening cycle vertex. The complete shard totals and
+witness records are in [`minimality/RESULTS.md`](minimality/RESULTS.md).
+Disconnected graphs of order at most 12 reduce to smaller connected
+components, since Schur positivity is closed under products. Thus these are
+exactly the two counterexamples of minimum order.
+
 ## References
 
 - R. P. Stanley, *A symmetric function generalization of the chromatic

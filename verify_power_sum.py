@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Independent exact verification by power sums and Frobenius characters.
 
-This program deliberately does not import verify.py.  It enumerates all 2^22
-edge subsets in Stanley's power-sum formula and obtains the target irreducible
-character values from the Frobenius alternant formula.
+This program deliberately does not import either graph verifier.  It
+enumerates all edge subsets in Stanley's power-sum formula for both
+minimum-order counterexamples and obtains the target irreducible character
+values from the Frobenius alternant formula.
 """
 
 from __future__ import annotations
@@ -14,7 +15,7 @@ import math
 from collections import Counter
 
 
-EDGES = (
+FIRST_EDGES = (
     (0, 4), (0, 6), (0, 8), (0, 10),
     (1, 5), (1, 7), (1, 9), (1, 10), (1, 11),
     (2, 7), (2, 9),
@@ -24,6 +25,19 @@ EDGES = (
     (7, 9), (7, 11),
     (8, 10), (8, 11),
     (9, 11),
+)
+
+SECOND_EDGES = (
+    (0, 4), (0, 6), (0, 9), (0, 11),
+    (1, 5), (1, 7), (1, 8), (1, 10),
+    (2, 7), (2, 8),
+    (3, 10), (3, 11),
+    (4, 6), (4, 9), (4, 11),
+    (5, 9),
+    (7, 8), (7, 10),
+    (8, 10),
+    (9, 11),
+    (10, 11),
 )
 
 
@@ -83,9 +97,11 @@ def centralizer_size(cycle_type: tuple[int, ...]) -> int:
     )
 
 
-def signed_component_counts() -> Counter[tuple[int, ...]]:
+def signed_component_counts(
+    edges: tuple[tuple[int, int], ...],
+) -> Counter[tuple[int, ...]]:
     totals: Counter[tuple[int, ...]] = Counter()
-    for mask in range(1 << len(EDGES)):
+    for mask in range(1 << len(edges)):
         parent = list(range(12))
 
         def find(vertex: int) -> int:
@@ -94,7 +110,7 @@ def signed_component_counts() -> Counter[tuple[int, ...]]:
                 vertex = parent[vertex]
             return vertex
 
-        for index, (u, v) in enumerate(EDGES):
+        for index, (u, v) in enumerate(edges):
             if not (mask >> index) & 1:
                 continue
             ru, rv = find(u), find(v)
@@ -111,15 +127,7 @@ def main() -> None:
     parser.add_argument("--table", action="store_true", help="print every power-sum contribution")
     args = parser.parse_args()
 
-    power = signed_component_counts()
     target = (3, 3, 3, 3)
-    contributions = []
-    for cycle_type in sorted(power, reverse=True):
-        character = frobenius_character(target, cycle_type)
-        contributions.append((cycle_type, power[cycle_type], character, power[cycle_type] * character))
-
-    coefficient = sum(row[3] for row in contributions)
-    assert len(power) == 77  # every partition of 12 occurs
     assert frobenius_character(target, (1,) * 12) == 462
     character_norm_numerator = sum(
         frobenius_character(target, cycle_type) ** 2
@@ -127,25 +135,45 @@ def main() -> None:
         for cycle_type in partitions(12)
     )
     assert character_norm_numerator == math.factorial(12)
-    chromatic_values = {
-        colors: sum(signed * colors ** len(cycle_type) for cycle_type, signed in power.items())
-        for colors in range(8)
-    }
-    assert chromatic_values == {
-        0: 0, 1: 0, 2: 0, 3: 0, 4: 5376,
-        5: 758160, 6: 23224320, 7: 325500000,
-    }
-    assert coefficient == -64
-
-    if args.table:
-        print("cycle_type\tsigned_subsets\tcharacter\tcontribution")
-        for cycle_type, signed, character, contribution in contributions:
-            print(f"{','.join(map(str, cycle_type))}\t{signed}\t{character}\t{contribution}")
-    print("edge subsets: 4194304")
-    print("power-sum component types: 77")
+    cases = (
+        ("K?`CRAWWUXIM", FIRST_EDGES, -64, 5376),
+        ("K?`CR@`bAbRB", SECOND_EDGES, -40, 7680),
+    )
+    for graph6, edges, expected, expected_chromatic_at_four in cases:
+        power = signed_component_counts(edges)
+        contributions = []
+        for cycle_type in sorted(power, reverse=True):
+            character = frobenius_character(target, cycle_type)
+            contributions.append(
+                (
+                    cycle_type,
+                    power[cycle_type],
+                    character,
+                    power[cycle_type] * character,
+                )
+            )
+        coefficient = sum(row[3] for row in contributions)
+        assert len(power) == 77  # every partition of 12 occurs
+        assert coefficient == expected
+        chromatic_at_four = sum(
+            signed * 4 ** len(cycle_type)
+            for cycle_type, signed in power.items()
+        )
+        assert chromatic_at_four == expected_chromatic_at_four
+        if args.table:
+            print(f"graph6={graph6}")
+            print("cycle_type\tsigned_subsets\tcharacter\tcontribution")
+            for cycle_type, signed, character, contribution in contributions:
+                print(
+                    f"{','.join(map(str, cycle_type))}\t{signed}\t"
+                    f"{character}\t{contribution}"
+                )
+        print(
+            f"graph6={graph6}; edges={len(edges)}; "
+            f"edge_subsets={1 << len(edges)}; component_types={len(power)}; "
+            f"P_G(4)={chromatic_at_four}; [s_(3,3,3,3)]={coefficient}"
+        )
     print("character checks: dimension=462; row norm=1")
-    print("chromatic polynomial check: P_G(4)=5376")
-    print("[s_(3,3,3,3)] X_G = -64")
     print("PASS")
 
 
