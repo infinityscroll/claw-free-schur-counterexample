@@ -16,4 +16,11 @@ from `kostka_data.txt`), self-tested on the counterexample itself, complete
 graphs, and full order-8/9 runs. `verify_claw_schur.py` is a third
 independent verifier for the counterexample coefficient with its own
 self-tests. Disconnected graphs reduce to components (Schur positivity is
-closed under products). Order-12 uniqueness computation in progress.
+closed under products). **Order 12 (complete)**: all 164,059,830,476 connected graphs
+(1,728,404 claw-free) contain **exactly two** non-Schur-positive claw-free
+graphs, both line graphs:
+- `K?`CRAWWUXIM` — L(C4 + triangles at opposite vertices + two pendants),
+  [s_3333] = -64;
+- `K?`CR@`bAbRB` — L(C5 + triangles at two distance-2 vertices + pendant
+  between them), [s_3333] = -40 (independently re-verified).
+These are the only counterexamples of minimum order.
