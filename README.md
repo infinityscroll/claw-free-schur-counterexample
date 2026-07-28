@@ -160,11 +160,19 @@ exactly the two counterexamples of minimum order.
 
 - R. P. Stanley, *A symmetric function generalization of the chromatic
   polynomial of a graph*, Advances in Mathematics 111 (1995), 166--194.
+- R. P. Stanley, *Graph colorings and related symmetric functions: ideas and
+  applications*, Discrete Mathematics 193 (1998), 267--286.
 - V. Gasharov, *On Stanley's chromatic symmetric function and clawfree
   graphs*, Discrete Mathematics 205 (1999), 229--234.
+- J. P. Matherne and A. H. Morales, *Chromatic symmetric functions of
+  claw-free graphs are not Schur positive*, [arXiv:2607.21508](https://arxiv.org/abs/2607.21508)
+  (2026), independent contemporaneous work.
+- MathOverflow, *Is this a counterexample to the claw-free Schur-positivity
+  conjecture?*, [question 513515](https://mathoverflow.net/questions/513515/is-this-a-counterexample-to-the-claw-free-schur-positivity-conjecture)
+  (2026).
 - E. Shelburne and S. van Willigenburg, *Schur-positivity for generalized
-  nets*, Enumerative Combinatorics and Applications 5:2 (2025), Article
-  S2R14, [arXiv:2409.00943](https://arxiv.org/abs/2409.00943).
+  nets*, Enumerative Combinatorics and Applications 5:1 (2025), Article
+  S2R8, [doi:10.54550/ECA2025V5S1R8](https://doi.org/10.54550/ECA2025V5S1R8).
 
 ## License
 
