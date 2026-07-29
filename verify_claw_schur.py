@@ -169,6 +169,38 @@ def run_selftests():
     print("selftest brute-force m-coeffs OK")
 
 
+def decode_graph6(code):
+    """Decode a short-form graph6 record without external libraries."""
+    n = ord(code[0]) - 63
+    assert 0 <= n <= 62
+    bits = []
+    for character in code[1:]:
+        value = ord(character) - 63
+        assert 0 <= value < 64
+        bits.extend((value >> shift) & 1 for shift in range(5, -1, -1))
+    pairs = [(i, j) for j in range(1, n) for i in range(j)]
+    assert len(bits) >= len(pairs)
+    return n, [pair for pair, bit in zip(pairs, bits) if bit]
+
+
+def check_connected_claw_free(n, edges):
+    adj = [set() for _ in range(n)]
+    for a, b in edges:
+        adj[a].add(b)
+        adj[b].add(a)
+    reached = {0}
+    frontier = [0]
+    while frontier:
+        vertex = frontier.pop()
+        for neighbor in adj[vertex] - reached:
+            reached.add(neighbor)
+            frontier.append(neighbor)
+    assert len(reached) == n
+    for vertex in range(n):
+        for trio in combinations(adj[vertex], 3):
+            assert any(y in adj[x] for x, y in combinations(trio, 2))
+
+
 if __name__ == "__main__":
     run_selftests()
 
@@ -187,19 +219,34 @@ if __name__ == "__main__":
     G_edges = [(i, j) for i in range(n) for j in range(i + 1, n)
                if set(E[i]) & set(E[j])]
     print(f"L(H): {n} vertices, {len(G_edges)} edges")
-    # claw-free check (line graphs always are; verify directly)
-    adj = [set() for _ in range(n)]
-    for a, b in G_edges:
-        adj[a].add(b); adj[b].add(a)
-    for v in range(n):
-        for trio in combinations(adj[v], 3):
-            if all(y not in adj[x] for x, y in combinations(trio, 2)):
-                raise SystemExit(f"NOT claw-free: induced claw at {v} {trio}")
+    # Line graphs always are claw-free; verify connectivity and claw-freeness
+    # directly so this check does not rely on the construction theorem.
+    check_connected_claw_free(n, G_edges)
     print("claw-free: verified directly")
 
     mc = csf_m_coeffs(n, G_edges)
     c = schur_coeffs(n, mc)
     target = (3, 3, 3, 3)
+    assert c[target] == -64
     print(f"[s_{target}] X_G = {c[target]}")
     negs = {k: v for k, v in c.items() if v < 0}
+    assert negs == {target: Fraction(-64)}
     print("all negative Schur coefficients:", negs)
+
+    # The exhaustive order-12 census found one further isomorphism class.
+    # Decode it independently of the census program and recompute all 77
+    # Schur coefficients from scratch.
+    second_code = "K?`CR@`bAbRB"
+    n2, second_edges = decode_graph6(second_code)
+    assert n2 == 12 and len(second_edges) == 21
+    check_connected_claw_free(n2, second_edges)
+    second_coefficients = schur_coeffs(n2, csf_m_coeffs(n2, second_edges))
+    second_negs = {
+        shape: value
+        for shape, value in second_coefficients.items()
+        if value < 0
+    }
+    assert second_negs == {target: Fraction(-40)}
+    print(f"graph6 {second_code}: 12 vertices, 21 edges; connected and claw-free")
+    print("all negative Schur coefficients:", second_negs)
+    print("PASS")

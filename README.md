@@ -133,15 +133,46 @@ edge subsets and again obtains $-64$.
 python3 verify_power_sum.py
 ```
 
+## Minimum-order classification
+
+An exhaustive `geng` census gives the following exact result.
+
+- Every claw-free graph on at most 11 vertices is Schur-positive.
+- Among the 1,728,404 connected claw-free graphs on 12 vertices, exactly two
+  isomorphism classes are not Schur-positive.
+
+Their graph6 records and negative coefficients are
+
+```text
+K?`CRAWWUXIM  [s_(3,3,3,3)] = -64
+K?`CR@`bAbRB  [s_(3,3,3,3)] = -40
+```
+
+The second graph is also a line graph. One root graph is obtained from a
+5-cycle by attaching triangles at two distance-two cycle vertices and a
+pendant edge at the intervening cycle vertex. The complete shard totals and
+witness records are in [`minimality/RESULTS.md`](minimality/RESULTS.md).
+Disconnected graphs of order at most 12 reduce to smaller connected
+components, since Schur positivity is closed under products. Thus these are
+exactly the two counterexamples of minimum order.
+
 ## References
 
 - R. P. Stanley, *A symmetric function generalization of the chromatic
   polynomial of a graph*, Advances in Mathematics 111 (1995), 166--194.
+- R. P. Stanley, *Graph colorings and related symmetric functions: ideas and
+  applications*, Discrete Mathematics 193 (1998), 267--286.
 - V. Gasharov, *On Stanley's chromatic symmetric function and clawfree
   graphs*, Discrete Mathematics 205 (1999), 229--234.
+- J. P. Matherne and A. H. Morales, *Chromatic symmetric functions of
+  claw-free graphs are not Schur positive*, [arXiv:2607.21508](https://arxiv.org/abs/2607.21508)
+  (2026), independent contemporaneous work.
+- MathOverflow, *Is this a counterexample to the claw-free Schur-positivity
+  conjecture?*, [question 513515](https://mathoverflow.net/questions/513515/is-this-a-counterexample-to-the-claw-free-schur-positivity-conjecture)
+  (2026).
 - E. Shelburne and S. van Willigenburg, *Schur-positivity for generalized
-  nets*, Enumerative Combinatorics and Applications 5:2 (2025), Article
-  S2R14, [arXiv:2409.00943](https://arxiv.org/abs/2409.00943).
+  nets*, Enumerative Combinatorics and Applications 5:1 (2025), Article
+  S2R8, [doi:10.54550/ECA2025V5S1R8](https://doi.org/10.54550/ECA2025V5S1R8).
 
 ## License
 

@@ -1,0 +1,39 @@
+name: Exact verification
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Verify the hand calculation
+        run: python3 verify.py
+
+      - name: Verify both complete Schur expansions
+        run: python3 verify_claw_schur.py
+
+      - name: Verify by power-sum inclusion-exclusion
+        run: python3 verify_power_sum.py
+
+      - name: Verify archived checksums
+        run: sha256sum --check SHA256SUMS
+
+      - name: Compile the census program
+        run: cc -O3 -std=c11 -Wall -Wextra -pedantic clawsweep.c -o /tmp/clawsweep
